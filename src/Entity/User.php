@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param UserDto $dto
+     * @param UserDTO $dto
      */
     public function setFromDto(AbstractDto $dto): void
     {
