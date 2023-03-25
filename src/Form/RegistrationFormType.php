@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\DTO\UserDTO;
+use App\DTO\UserDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -82,7 +82,8 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => UserDTO::class
+            'data_class' => UserDto::class,
+            'required' => false
         ]);
     }
 }

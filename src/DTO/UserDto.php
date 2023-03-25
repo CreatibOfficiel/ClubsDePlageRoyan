@@ -6,7 +6,7 @@ use App\Entity\AbstractEntity;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class UserDTO extends AbstractDTO
+class UserDto extends AbstractDto
 {
 
     #[Assert\NotBlank]
