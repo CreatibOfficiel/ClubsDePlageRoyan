@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+<div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+
+    <h1 class="text-2xl font-bold text-white">Se connecter</h1>
+    <span class="text-sm text-gray-300">Vous êtes sur le point de vous connecter à l'application de gestion des réservations de plage de Royan.</span>
+
+    {% if error %}
+        <div class="alert alert-danger">
+            <span class="text-red-500">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+        </div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connecté en tant que {{ app.user.getFullName() }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %}
+
+    <form action="{{ path('app_login') }}" method="post">
+        <div class="space-y-6">
+            <div>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email:</label>
+                <input required type="text" id="username" name="_username" value="{{ last_username }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+                <input type="password" id="password" name="_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required>
+            </div>
+        </div>
+
+
+        {# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"> #}
+
+        <button type="submit" class="mt-8 w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+            Se connecter
+        </button>
+
+    </form>
+
+    <span class="mt-6 block w-full text-center text-sm text-gray-500 dark:text-gray-400">
+        Pas encore de compte ? <a href="{{ path('app_register') }}" class="text-blue-500 hover:underline">Inscrivez-vous</a>
+    </span>
+
+</div>
+
+{% endblock %}

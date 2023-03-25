@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\UserDTO;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,17 +19,31 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $userDto = new UserDTO($user);
+
+        $form = $this->createForm(RegistrationFormType::class, $userDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($userDto->password && $userDto->password === $userDto->passwordConfirm) {
+                $user->setMail($userDto->mail);
+                $user->setFirstName($userDto->firstName);
+                $user->setLastName($userDto->lastName);
+                $user->setAddress($userDto->address);
+                $user->setPhoneNumber($userDto->phoneNumber);
+                // encode the plain password
+                $user->setPassword($userPasswordHasher->hashPassword($user, $userDto->password));
+            }
+
             // encode the plain password
+            /**
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            );
+            );*/
 
             $entityManager->persist($user);
             $entityManager->flush();
