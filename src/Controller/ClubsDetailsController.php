@@ -11,7 +11,7 @@ class ClubsDetailsController extends AbstractController
     #[Route('/clubs/details', name: 'app_clubs_details')]
     public function index(): Response
     {
-        return $this->render('clubs_details/index.html.twig', [
+        return $this->render('clubs_details/clubs_details.html.twig', [
             'controller_name' => 'ClubsDetailsController',
         ]);
     }

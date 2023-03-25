@@ -11,7 +11,7 @@ class ChildrensActivityController extends AbstractController
     #[Route('/childrens/activity', name: 'app_childrens_activity')]
     public function index(): Response
     {
-        return $this->render('childrens_activity/index.html.twig', [
+        return $this->render('childrens_activity/childrens_activity.html.twig', [
             'controller_name' => 'ChildrensActivityController',
         ]);
     }
