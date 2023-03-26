@@ -7,36 +7,16 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<SwimmingPack>
- *
  * @method SwimmingPack|null find($id, $lockMode = null, $lockVersion = null)
  * @method SwimmingPack|null findOneBy(array $criteria, array $orderBy = null)
  * @method SwimmingPack[]    findAll()
  * @method SwimmingPack[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SwimmingPackRepository extends ServiceEntityRepository
+class SwimmingPackRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SwimmingPack::class);
-    }
-
-    public function save(SwimmingPack $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(SwimmingPack $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 
 //    /**

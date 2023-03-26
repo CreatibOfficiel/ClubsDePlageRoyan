@@ -7,13 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookingLessonRepository::class)]
-class BookingLesson
+class BookingLesson extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
@@ -31,11 +26,6 @@ class BookingLesson
     #[ORM\ManyToOne(inversedBy: 'bookingLessons')]
     #[ORM\JoinColumn(nullable: false)]
     private ?SwimmingPackBalance $swimmingPackBalance = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getStatus(): ?string
     {
