@@ -1,20 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}
+    Contact et localisation
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Contact et localisation</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Adresse</h2>
+                <p>Adresse de l'entreprise</p>
+                <p>Code postal Ville</p>
+                <p>Téléphone : 06 74 68 90 30</p>
+                <p>Email :
+                    <a href="mailto:mikbussiere@gmail.com">mikbussiere@gmail.com</a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h2>Localisation</h2>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/mathv/PhpstormProjects/ClubsDePlageRoyan/src/Controller/ContactController.php'|file_link(0) }}">src/Controller/ContactController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/mathv/PhpstormProjects/ClubsDePlageRoyan/templates/contact/index.html.twig'|file_link(0) }}">templates/contact/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}

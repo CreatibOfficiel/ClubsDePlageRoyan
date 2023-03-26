@@ -8,13 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SwimmingPackRepository::class)]
-class SwimmingPack
+class SwimmingPack extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $lessonsAmount = null;
 
@@ -27,11 +22,6 @@ class SwimmingPack
     public function __construct()
     {
         $this->swimmingPackBalances = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLessonsAmount(): ?int

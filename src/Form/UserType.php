@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\DTO\UserDto;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -31,10 +31,12 @@ class UserType extends AbstractType
                 'label' => 'Adresse mail'
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe'
+                'label' => 'Mot de passe',
+                'required' => false,
             ])
             ->add('passwordConfirm', PasswordType::class, [
-                'label' => 'Confirmation du mot de passe'
+                'label' => 'Confirmation du mot de passe',
+                'required' => false,
             ])
         ;
     }
@@ -42,7 +44,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => UserDto::class,
         ]);
     }
 }

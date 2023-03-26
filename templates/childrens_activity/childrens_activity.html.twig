@@ -1,51 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChildrensActivityController!{% endblock %}
+{% block title %}
+    Activités
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="bg-white shadow-md rounded px-8 py-6 flex flex-col">
+            <h1 class="text-center text-4xl font-bold">Les activités</h1>
+            <p class="text-center text-2xl font-bold">Voici la listes non-exhaustive des activités proposées par le club</p>
+            <ul class="list-disc list-inside mb-15">
+                <li>Activités d’éveil et de motricité</li>
+                <li>Jeux collectifs et sportifs.</li>
+                <li>Baignades.</li>
+                <li>Olympiades.</li>
+                <li>Fort Boyard</li>
+                <li>Casino</li>
+                <li>Jeu d’oie géant.</li>
+                <li>Force Charentaise</li>
+                <li>Chasses au trésor.</li>
+                <li>Kohlanta.</li>
+                <li>Initiations aux sports Collectifs.</li>
+                <li>Parcours du combattant.</li>
+                <li>Jeux de sable.</li>
+                <li>Jeux d’eau.</li>
+                <li>Jeux traditionnels. (tous les jeux colletcifs)</li>
+                <li>Jeux d’éveil pour les plus petits</li>
+            </ul>
 
-<div class="example-wrapper">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-        <h2 class="text-center text-2xl font-bold m-4">Activités au club pour les enfants</h2>
-        <ul class="list-disc list-inside mb-15">
-            <li>Activités au club pour les enfants</li>
-            <li>Activités d’éveil et de motricité</li>
-            <li>Jeux collectifs et sportifs.</li>
-            <li>Baignades.</li>
-            <li>Olympiades.</li>
-            <li>Fort Boyard</li>
-            <li>Casino</li>
-            <li>Jeu d’oie géant.</li>
-            <li>Force Charentaise</li>
-            <li>Chasses au trésor.</li>
-            <li>Kohlanta.</li>
-            <li>Initiations aux sports Collectifs.</li>
-            <li>Parcours du combattant.</li>
-            <li>Jeux de sable.</li>
-            <li>Jeux d’eau.</li>
-            <li>Jeux traditionnels. (tous les jeux colletcifs)</li>
-            <li>Jeux d’éveil pour les plus petits</li>
-        </ul>
+            <h2 class="text-center text-2xl font-bold">Semaine à thème:   cirque, pirates, sport, animaux mer, déguisements...</h2>
+            <ul class="list-disc list-inside">
+                <li>Châteaux gonflables</li>
+                <li>Trampolines</li>
+                <li>Et plein d’autres animations prévues par nos animateurs</li>
+            </ul>
 
-        <h2 class="text-center text-2xl font-bold">Semaine à thème:   cirque, pirates, sport, animaux mer, déguisements...</h2>
-        <ul class="list-disc list-inside">
-            <li>Châteaux gonflables</li>
-            <li>Trampolines</li>
-            <li>Et plein d’autres animations prévues par nos animateurs</li>
-        </ul>
-
-        <h2 class="text-center text-2xl font-bold">A prévoir pour tous les matins et après midis:</h2>
-        <ul class="list-disc list-inside">
-            <li>eau</li>
-            <li>Affaires de piscine: maillot de bain, serviette, lunette, bouées</li>
-            <li>Gouter</li>
-            <li>Crème solaire</li>
-            <li>Casquette ou bob</li>
-        </ul>
+            <h2 class="text-center text-2xl font-bold">A prévoir pour tous les matins et après midis:</h2>
+            <ul class="list-disc list-inside">
+                <li>eau</li>
+                <li>Affaires de piscine: maillot de bain, serviette, lunette, bouées</li>
+                <li>Gouter</li>
+                <li>Crème solaire</li>
+                <li>Casquette ou bob</li>
+            </ul>
+        </div>
     </div>
-</div>
 {% endblock %}

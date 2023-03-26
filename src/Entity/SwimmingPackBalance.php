@@ -8,13 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SwimmingPackBalanceRepository::class)]
-class SwimmingPackBalance
+class SwimmingPackBalance extends AbstractEntity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $initialAmount = null;
 
@@ -22,20 +17,15 @@ class SwimmingPackBalance
     private ?User $user = null;
 
     #[ORM\ManyToMany(targetEntity: SwimmingPack::class, inversedBy: 'swimmingPackBalances')]
-    private Collection $swimmingPÂacks;
+    private Collection $swimmingPacks;
 
     #[ORM\OneToMany(mappedBy: 'swimmingPackBalance', targetEntity: BookingLesson::class)]
     private Collection $bookingLessons;
 
     public function __construct()
     {
-        $this->swimmingPÂacks = new ArrayCollection();
+        $this->swimmingPacks = new ArrayCollection();
         $this->bookingLessons = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getInitialAmount(): ?int
@@ -65,23 +55,23 @@ class SwimmingPackBalance
     /**
      * @return Collection<int, SwimmingPack>
      */
-    public function getSwimmingPÂacks(): Collection
+    public function getSwimmingPacks(): Collection
     {
-        return $this->swimmingPÂacks;
+        return $this->swimmingPacks;
     }
 
-    public function addSwimmingPAck(SwimmingPack $swimmingPAck): self
+    public function addSwimmingPack(SwimmingPack $swimmingPack): self
     {
-        if (!$this->swimmingPÂacks->contains($swimmingPAck)) {
-            $this->swimmingPÂacks->add($swimmingPAck);
+        if (!$this->swimmingPacks->contains($swimmingPack)) {
+            $this->swimmingPacks->add($swimmingPack);
         }
 
         return $this;
     }
 
-    public function removeSwimmingPAck(SwimmingPack $swimmingPAck): self
+    public function removeSwimmingPack(SwimmingPack $swimmingPack): self
     {
-        $this->swimmingPÂacks->removeElement($swimmingPAck);
+        $this->swimmingPacks->removeElement($swimmingPack);
 
         return $this;
     }
