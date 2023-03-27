@@ -1,0 +1,82 @@
+{{ form_start(form) }}
+
+    <div class="space-y-6 mb-6">
+        {{ form_row(form.name, {
+            label: 'Nom du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: 'Club de mickey',
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+
+        {{ form_row(form.description, {
+            label: 'Description du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: 'Description du club de mickey',
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+
+        {{ form_row(form.picturePath, {
+            label: 'Lien de l\'image du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: "https:// ...",
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+    </div>
+
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+        {{ form_row(form.openingTime, {
+            label: 'Heure d\'ouverture du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                class: "border text-sm rounded-lg block w-fit p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+
+        {{ form_row(form.closingTime, {
+            label: 'Heure de fermeture du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                class: "border text-sm rounded-lg block w-fit p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+    </div>
+
+    <div class="space-y-6">
+        {{ form_row(form.address, {
+            label: 'Adresse postale du club',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: 'Adresse du club de mickey',
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+    </div>
+
+    <button type="submit" class="mt-6 w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+        {{ button_label|default('Confirmer') }}
+    </button>
+
+{{ form_end(form) }}
+
+<span class="mt-6 block w-full text-center text-sm text-gray-400">
+        Pour revenir en arrière, <a href="{{ path('app_admin_clubs_index') }}" class="font-medium text-blue-400 hover:text-blue-300 hover:underline">cliquez ici</a>
+</span>
