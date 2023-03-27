@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un tarif{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <h1 class="text-2xl font-bold text-white">Modifier un tarif</h1>
+        <span class="text-sm text-gray-300">Vous êtes sur le point de modifier un tarif</span>
+
+        {{ include('admin/swimming_pack/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+
+{% endblock %}
