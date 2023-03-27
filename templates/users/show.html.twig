@@ -27,7 +27,7 @@
                 <h5 class="mb-1 text-xl font-medium text-white">{{ user.getFullName() }}</h5>
                 <span class="text-sm text-gray-400">Rôle : Parent</span>
                 <div class="flex mt-4 space-x-3 md:mt-6">
-                    <a href="#" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
+                    <a href="{{ path('app_add_child') }}" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
                     <a href="#" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>
                 </div>
             </div>
@@ -37,5 +37,37 @@
             <a href="{{ path('app_logout') }}">Déconnexion</a>
         </button>
 
+        <section class="bg-gray-900">
+            <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
+                <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Mes enfants</h2>
+                    {% if childs|length == 0 %}
+                        <p class="text-xl text-gray-400">Vous n'avez pas encore ajouté d'enfant ? <a href="{{ path('app_add_child') }}" class="text-blue-500 hover:underline">Ajouter un enfant</a></p>
+                    {% endif %}
+                </div>
+
+                <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+                    {% for child in childs %}
+                        <div class="items-center rounded-lg shadow sm:flex bg-gray-800 border-gray-700">
+                            <div class="p-5">
+                                <h3 class="text-xl font-bold tracking-tight text-white">
+                                    <a href="#">{{ child.getFullName() }}</a>
+                                </h3>
+                                <span class="text-gray-400">Age: {{ child.getAge() }} ans</span>
+                                <div class="mt-2">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+                                        <a href="{{ path('app_edit_child', {'id': child.getId()}) }}">Modifer</a>
+                                    </button>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded">
+                                        <a href="{{ path('app_delete_child', {'id': child.getId()}) }}">Supprimer</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section>
     </div>
 {% endblock %}
