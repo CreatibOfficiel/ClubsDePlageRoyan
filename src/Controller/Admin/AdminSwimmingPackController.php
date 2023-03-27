@@ -40,14 +40,6 @@ class AdminSwimmingPackController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_swimming_pack_show', methods: ['GET'])]
-    public function show(SwimmingPack $swimmingPack): Response
-    {
-        return $this->render('admin/swimming_pack/show.html.twig', [
-            'swimming_pack' => $swimmingPack,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_admin_swimming_pack_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SwimmingPack $swimmingPack, SwimmingPackRepository $swimmingPackRepository): Response
     {
