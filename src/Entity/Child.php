@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\DTO\AbstractDto;
 
 #[ORM\Entity(repositoryClass: ChildRepository::class)]
 class Child extends AbstractEntity
@@ -108,5 +109,25 @@ class Child extends AbstractEntity
         }
 
         return $this;
+    }
+
+    public function setFromDto(AbstractDto $dto): void
+    {
+        $this->setFirstName($dto->firstName);
+        $this->setLastName($dto->lastName);
+        $this->setBirthdate($dto->birthdate);
+        $this->setParent($dto->parent);
+    }
+
+    public function getAge(): int
+    {
+        $now = new \DateTime();
+        $interval = $now->diff($this->getBirthdate());
+        return $interval->y;
+    }
+
+    public  function getFullName(): string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }
