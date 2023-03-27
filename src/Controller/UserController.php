@@ -90,7 +90,7 @@ class UserController extends AbstractController
 
                 $this->addFlash('success', 'Vos informations ont été mises à jour !');
 
-                return $this->redirectToRoute('user_edit_index');
+                return $this->redirectToRoute('app_user');
             }
         }
 

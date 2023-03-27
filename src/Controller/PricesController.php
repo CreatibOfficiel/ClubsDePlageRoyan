@@ -12,7 +12,7 @@ class PricesController extends AbstractController
     public function index(): Response
     {
         return $this->render('prices/prices.html.twig', [
-            'controller_name' => 'ParicesController',
+            'controller_name' => 'PricesController',
         ]);
     }
 }
