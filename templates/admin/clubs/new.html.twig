@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajouter un nouveau club
+{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <h1 class="text-2xl font-bold text-white">Ajouter un club</h1>
+        <span class="text-sm text-gray-300">Vous êtes sur le point d'ajouter un nouveau club. Merci de remplir le formulaire ci-dessous.</span>
+
+        {{ include('admin/clubs/_form.html.twig', {'button_label': 'Créer un club'}) }}
+    </div>
+{% endblock %}

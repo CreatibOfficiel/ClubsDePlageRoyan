@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des clubs
+{% endblock %}
+
+{% block body %}
+
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            <div class="flex items-center pb-4 justify-end">
+                <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                    <a href="{{ path('app_admin_clubs_new') }}">Créer un nouveau club</a>
+                </button>
+            </div>
+
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ID
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for club in clubs %}
+                        <tr class="border-b bg-gray-800 border-gray-700 rounded-lg max-h-7">
+                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                                {{ club.name }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ club.id }}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex justify-end space-x-4">
+                                    <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                                        <a href="{{ path('app_clubs_details', {'id': club.id}) }}" target="_blank">Voir</a>
+                                    </button>
+
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                                        <a href="{{ path('app_admin_clubs_edit', {'id': club.id}) }}">Modifier</a>
+                                    </button>
+
+                                    <form action="{{ path('app_admin_clubs_delete', {'id': club.id}) }}" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer ce club ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ club.id) }}">
+                                        <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Supprimer</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                {% if clubs|length == 0 %}
+                    <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-600 rounded-lg">
+                        <td class="px-6 py-4 text-center" colspan="8">
+                            Aucun club n'a été trouvé.
+                        </td>
+                    </tr>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

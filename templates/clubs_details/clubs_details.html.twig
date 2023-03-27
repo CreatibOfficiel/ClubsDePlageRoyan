@@ -5,7 +5,72 @@
 {% endblock %}
 
 {% block body %}
-    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+    <div class="p-4 space-y-8 bg-gray-900 min-h-screen">
+        <img src="{{ club.picturePath }}" alt="image-club" class="w-1/2 h-1/2 mx-auto">
 
+        <div class="grid grid-cols-2 gap-x-8 divide-x">
+            <div class="flex flex-col space-y-4">
+                <span class="text-4xl text-white">Club {{ club.name }}</span>
+
+                <span class="text-lg text-white">
+                    {{ club.description }}
+                </span>
+
+                <span class="text-sm text-white font-semibold">
+                    Horaires
+                </span>
+
+                <span class="text-sm text-white">
+                    {{ club.openingTime|format_datetime(pattern='HH:mm') }} - {{ club.closingTime|format_datetime(pattern='HH:mm') }}
+                </span>
+
+                <span class="text-sm text-white font-semibold">
+                    Adresse
+                </span>
+
+                <span class="text-sm text-white">
+                    {{ club.address }}
+                </span>
+
+            </div>
+
+            <div class="flex flex-col space-y-4 pl-8">
+                <span class="text-4xl text-white">Contact</span>
+
+                <span class="text-sm text-white font-semibold">
+                    Téléphone
+                </span>
+
+                <span class="text-sm text-white">
+                    06 74 68 90 30 (en dehors des heures repas)
+                </span>
+
+                <span class="text-sm text-white font-semibold">
+                    Email
+                </span>
+
+                <span class="text-sm text-white">
+                    mikbuissiere@gmail.com
+                </span>
+
+                <span class="text-sm text-white font-semibold">
+                    Sur place
+                </span>
+
+                <div>
+                   <span class="text-sm text-white">
+                       Afin de ne pas déranger les animateurs, merci de venir aux horaires suivantes :
+                    </span>
+                    <ul>
+                        <li class="text-sm text-white">
+                            Le matin de 9h30 à 10h00 et 12h à 12h30
+                        </li>
+                        <li class="text-sm text-white">
+                            L'après-midi de 15h30 à 16h00 et 18h à 18h30
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
