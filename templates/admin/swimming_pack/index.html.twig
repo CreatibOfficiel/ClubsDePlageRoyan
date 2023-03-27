@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SwimmingPack index{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            <div class="flex items-center pb-4 justify-end">
+                <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                    <a href="{{ path('app_admin_swimming_pack_new') }}">Créer un nouveau tarif</a>
+                </button>
+            </div>
+
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        ID
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nombre de leçons
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Prix
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for swimming_pack in swimming_packs %}
+                    <tr class="border-b bg-gray-800 border-gray-700 rounded-lg max-h-7">
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                            {{ swimming_pack.id }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                            {{ swimming_pack.lessonsAmount }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                            {{ swimming_pack.price }} €
+                        </th>
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end space-x-4">
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                                    <a href="{{ path('app_admin_swimming_pack_edit', {'id': swimming_pack.id}) }}">Modifier</a>
+                                </button>
+
+                                <form action="{{ path('app_admin_swimming_pack_delete', {'id': swimming_pack.id}) }}" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer ce tarif ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ swimming_pack.id) }}">
+                                    <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+                {% if swimming_packs|length == 0 %}
+                    <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-600 rounded-lg">
+                        <td class="px-6 py-4 text-center" colspan="8">
+                            Aucun tarif de leçon de natation n'a été trouvé.
+                        </td>
+                    </tr>
+                {% endif %}
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

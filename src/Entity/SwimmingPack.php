@@ -16,7 +16,7 @@ class SwimmingPack extends AbstractEntity
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\ManyToMany(targetEntity: SwimmingPackBalance::class, mappedBy: 'swimmingP�acks')]
+    #[ORM\ManyToMany(targetEntity: SwimmingPackBalance::class, mappedBy: 'swimmingPacks')]
     private Collection $swimmingPackBalances;
 
     public function __construct()
