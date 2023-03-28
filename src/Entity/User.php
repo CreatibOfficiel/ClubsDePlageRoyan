@@ -67,6 +67,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->setPhoneNumber($dto->phoneNumber);
         $this->setAddress($dto->address);
         $this->setMail($dto->mail);
+        if ($dto->role) {
+            $this->setRoles([$dto->role]);
+        }
         if ($dto->password) {
             $this->setPassword($dto->password);
         }
@@ -147,6 +150,11 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getStringRoles(): string
+    {
+        return implode(', ', $this->roles);
     }
 
     public function getRoles(): array

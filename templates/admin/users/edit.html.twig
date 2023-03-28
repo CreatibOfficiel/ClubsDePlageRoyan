@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Modification d'un utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <h1 class="text-2xl font-bold text-white">Modifier un utilisateur</h1>
+        <span class="text-sm text-gray-300">Vous êtes sur le point de modifier un utilisateur</span>
+
+        {{ include('admin/users/_form.html.twig', {'button_label': 'Mettre à jour l\'utilisateur'}) }}
+    </div>
+{% endblock %}

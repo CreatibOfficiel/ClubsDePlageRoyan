@@ -31,10 +31,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
+                'validation_groups' => ['add'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -48,10 +46,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('passwordConfirm', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
+                'validation_groups' => ['add'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please confirm your password',
