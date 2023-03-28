@@ -235,7 +235,7 @@ class UserController extends AbstractController
         }
 
         $educator = $user->getEducator();
-        if (!$educator && $this->isGranted(User::ROLE_EDUCATOR)) {
+        if (!$educator && $this->isGranted('ROLE_EDUCATOR')) {
             $educator = new Educator();
             $educator->setUser($user);
         }

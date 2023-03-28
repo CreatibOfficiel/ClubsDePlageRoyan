@@ -34,6 +34,8 @@
                     <span class="text-sm text-gray-400">Rôle : Parent</span>
                 {% elseif user.getStringRoles() == 'ROLE_ADMIN' %}
                     <span class="text-sm text-gray-400">Rôle : Administrateur</span>
+                {% elseif user.getStringRoles() == 'ROLE_EDUCATOR' %}
+                    <span class="text-sm text-gray-400">Rôle : Moniteur</span>
                 {% endif %}
 
                 {% if (is_granted('ROLE_EDUCATOR')) and (educatorAvailability) %}
