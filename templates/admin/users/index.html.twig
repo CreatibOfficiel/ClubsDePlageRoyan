@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Rôle
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nombre d'enfants
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                <tr class="border-b bg-gray-800 border-gray-700">
+                    <th scope="row" class="px-6 py-4 whitespace-nowrap text-white">
+                        <div class="text-base font-semibold">{{ user.getFullName() }}</div>
+                        <div class="font-normal text-gray-500">{{ user.mail }}</div>
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ user.getStringRoles() }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            {{ user.getChildrens()|length }}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 flex justify-end space-x-4">
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ path('app_admin_users_show', {'id': user.id}) }}" target="_blank">Voir</a>
+                        </button>
+
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ path('app_admin_users_edit', {'id': user.id}) }}">Modifier</a>
+                        </button>
+
+                        <form action="{{ path('app_admin_users_delete', {'id': user.id}) }}" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer cet utilisateur ?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                            <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

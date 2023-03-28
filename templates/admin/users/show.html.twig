@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Affichage d'un utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <h1 class="text-2xl font-bold text-white">Affichage d'un utilisateur</h1>
+        <span class="text-sm text-gray-300">Vous êtes en train de consulter l'utilisateur {{ user.getFullName() }}.</span>
+
+        <div class="flex flex-col space-y-2">
+            <span class="text-sm text-gray-300">Dernière connexion : {{ user.lastLogin|date('d/m/Y') }}</span>
+            <span class="text-sm text-gray-300">Prénom : {{ user.firstName }}</span>
+            <span class="text-sm text-gray-300">Nom : {{ user.lastName }}</span>
+            <span class="text-sm text-gray-300">Numéro de téléphone : {{ user.phoneNumber }}</span>
+            <span class="text-sm text-gray-300">Adresse : {{ user.address }}</span>
+            <span class="text-sm text-gray-300">Mail : {{ user.mail }}</span>
+            <span class="text-sm text-gray-300">Rôle : {{ user.getStringRoles() }}</span>
+            <span class="text-sm text-gray-300">ID : {{ user.id }}</span>
+        </div>
+
+        <h2 class="text-xl font-bold text-white">Enfants</h2>
+        <div class="flex space-x-2">
+            {% for children in user.getChildrens() %}
+                <div class="block max-w-sm p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ children.firstName }} {{ children.lastName }}</h5>
+                    <p class="font-normal text-gray-400">ID : {{ children.id }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <span class="mt-6 block w-full text-center text-sm text-gray-400">
+            Pour revenir en arrière, <a href="{{ path('app_admin_users_index') }}" class="font-medium text-blue-400 hover:text-blue-300 hover:underline">cliquez ici</a>
+        </span>
+    </div>
+{% endblock %}

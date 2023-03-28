@@ -38,23 +38,22 @@ class UserController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
 
         $userDto = new UserDto();
+        $userDto->role = 'ROLE_USER';
 
         $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
             if ($userDto->password && $userDto->password !== $userDto->passwordConfirm) {
                 $form->get('plainPasswordConfirm')->addError(new FormError('Les mots de passes ne correspondent pas'));
             }
 
+            var_dump($userDto);
             if ($form->isValid()) {
                 $user = new User();
                 $this->userService->addOrUpdate($userDto, $user);

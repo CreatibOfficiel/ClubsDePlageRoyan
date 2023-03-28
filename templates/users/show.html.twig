@@ -25,7 +25,11 @@
             <div class="flex flex-col items-center pb-10">
                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/assets/images/logo.png" alt="logo">
                 <h5 class="mb-1 text-xl font-medium text-white">{{ user.getFullName() }}</h5>
-                <span class="text-sm text-gray-400">Rôle : Parent</span>
+                {% if user.getStringRoles() == 'ROLE_USER' %}
+                    <span class="text-sm text-gray-400">Rôle : Parent</span>
+                {% elseif user.getStringRoles() == 'ROLE_ADMIN' %}
+                    <span class="text-sm text-gray-400">Rôle : Administrateur</span>
+                {% endif %}
                 <div class="flex mt-4 space-x-3 md:mt-6">
                     <a href="{{ path('app_add_child') }}" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
                     <a href="#" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>

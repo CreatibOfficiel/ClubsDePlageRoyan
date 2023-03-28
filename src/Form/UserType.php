@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\DTO\UserDto;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -29,6 +30,14 @@ class UserType extends AbstractType
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'Adresse mail'
+
+            ])
+            ->add('role', ChoiceType::class, [
+                'label' => 'Rôle',
+                'choices' => [
+                    'Utilisateur' => 'ROLE_USER',
+                    'Administrateur' => 'ROLE_ADMIN'
+                ],
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
