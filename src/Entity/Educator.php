@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EducatorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EducatorRepository::class)]
@@ -19,6 +20,12 @@ class Educator extends AbstractEntity
 
     #[ORM\OneToMany(mappedBy: 'educator', targetEntity: TimeSlot::class, orphanRemoval: true)]
     private Collection $timeSlot;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $availableDateFrom = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $availableDateTo = null;
 
     public function __construct()
     {
@@ -75,6 +82,30 @@ class Educator extends AbstractEntity
                 $timeSlot->setEducator(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvailableDateFrom(): ?\DateTimeInterface
+    {
+        return $this->availableDateFrom;
+    }
+
+    public function setAvailableDateFrom(?\DateTimeInterface $availableDateFrom): self
+    {
+        $this->availableDateFrom = $availableDateFrom;
+
+        return $this;
+    }
+
+    public function getAvailableDateTo(): ?\DateTimeInterface
+    {
+        return $this->availableDateTo;
+    }
+
+    public function setAvailableDateTo(?\DateTimeInterface $availableDateTo): self
+    {
+        $this->availableDateTo = $availableDateTo;
 
         return $this;
     }

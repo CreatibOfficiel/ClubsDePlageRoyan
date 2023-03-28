@@ -7,7 +7,41 @@
 {% block body %}
 
     <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
-
+        <table class="w-50 text-sm text-left text-gray-400 shadow-md sm:rounded-lg">
+            <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Tarifs
+                    </th>
+                    {% for swimming_pack in swimming_packs %}
+                        <th scope="col" class="px-6 py-3">
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b bg-gray-800 border-gray-700 rounded-lg max-h-7">
+                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                        Nombre de leçons
+                    </th>
+                    {% for swimming_pack in swimming_packs %}
+                        <td scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                            {{ swimming_pack.lessonsAmount }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="border-b bg-gray-800 border-gray-700 rounded-lg max-h-7">
+                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                        Prix
+                    </th>
+                    {% for swimming_pack in swimming_packs %}
+                        <td scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                            {{ swimming_pack.price }} €
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

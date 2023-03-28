@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['mail'], message: 'There is already an account with this mail')]
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    const ROLE_EDUCATOR = 'ROLE_EDUCATOR';
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
