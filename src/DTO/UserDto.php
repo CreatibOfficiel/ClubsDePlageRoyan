@@ -21,10 +21,8 @@ class UserDto extends AbstractDto
     #[Assert\Length(max: 250)]
     public string $phoneNumber;
 
-    #[Assert\NotBlank(groups: ["add"])]
     public ?string $password = null;
 
-    #[Assert\NotBlank(groups: ["add"])]
     public ?string $passwordConfirm = null;
 
     #[Assert\NotBlank]
@@ -33,6 +31,9 @@ class UserDto extends AbstractDto
     #[Assert\NotBlank]
     #[Assert\Email]
     public string $mail;
+
+    #[Assert\NotBlank]
+    public string $role;
 
     public bool $isNew = true;
 
@@ -47,5 +48,6 @@ class UserDto extends AbstractDto
         $this->lastName = $user->getLastName();
         $this->phoneNumber = $user->getPhoneNumber();
         $this->mail = $user->getMail();
+        $this->role = $user->getStringRoles();
     }
 }

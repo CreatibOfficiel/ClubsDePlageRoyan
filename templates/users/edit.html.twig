@@ -114,11 +114,20 @@
                             class: "text-sm font-medium text-gray-300"
                         },
                         attr: {
-                            class: "rounded ml-2 border bg-gray-700 border-gray-600 focus:ring-3 focus:ring-blue-600 ring-offset-gray-800"
+                            class: "ml-2 w-4 h-4 text-blue-600 rounded focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
                         }
                     }) }}
                 {% endif %}
 
+                {{ form_row(userForm.role, {
+                    label: 'Rôle',
+                    label_attr: {
+                        class: "hidden"
+                    },
+                    attr: {
+                        class: "hidden"
+                    },
+                }) }}
             </div>
 
             {% if isAnonymous %}
