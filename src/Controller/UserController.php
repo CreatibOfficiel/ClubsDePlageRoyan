@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\DTO\ChildDto;
 use App\DTO\UserDto;
 use App\Entity\Child;
+use App\Entity\Educator;
 use App\Entity\User;
 use App\Form\ChildType;
+use App\Form\EducatorAvailabilityType;
 use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Repository\ChildRepository;
+use App\Repository\EducatorRepository;
 use App\Services\ChildService;
 use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -118,10 +121,10 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
-
         return $this->render('users/show.html.twig', [
             'user' => $user,
             'childs' => $user->getChildrens(),
+            'educatorAvailability' => $user->getEducator()
         ]);
     }
 
@@ -220,6 +223,40 @@ class UserController extends AbstractController
             'user' => $user,
             'childForm' => $form->createView(),
             'isNewChild' => false
+        ]);
+    }
+
+    #[Route('/user/educator/availability', name: 'app_educator_availability', methods: ['GET', 'POST'])]
+    public function educatorAvailabilityIndex(Request $request, EducatorRepository $educatorRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $educator = $user->getEducator();
+        if (!$educator && $this->isGranted(User::ROLE_EDUCATOR)) {
+            $educator = new Educator();
+            $educator->setUser($user);
+        }
+
+        $form = $this->createForm(EducatorAvailabilityType::class, $educator);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $educator->setAvailableDateFrom($form->get('availableDateFrom')->getData());
+            $educator->setAvailableDateTo($form->get('availableDateTo')->getData());
+
+
+            $educatorRepository->save($educator, true);
+
+            return $this->redirectToRoute('app_user');
+        }
+
+        return $this->render('users/educator_availability.html.twig', [
+            'user' => $user,
+            'availabilityForm' => $form->createView()
         ]);
     }
 }

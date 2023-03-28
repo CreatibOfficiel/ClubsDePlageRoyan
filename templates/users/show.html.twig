@@ -14,11 +14,16 @@
                     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
                 </button>
                 <!-- Dropdown menu -->
-                <div id="dropdown" class="z-10 hidden text-base list-none divide-y divide-gray-100 rounded-lg shadow w-44 bg-gray-700">
+                <div id="dropdown" class="z-10 hidden text-base list-none divide-y divide-gray-100 rounded-lg shadow w-55 bg-gray-700">
                     <ul class="py-2" aria-labelledby="dropdownButton">
                         <li>
                             <a href="{{ path('app_edit') }}" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Modifier mon compte</a>
                         </li>
+                        {% if is_granted('ROLE_EDUCATOR') %}
+                            <li>
+                                <a href="{{ path('app_educator_availability') }}" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Changer mes disponibilités</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -26,6 +31,9 @@
                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/assets/images/logo.png" alt="logo">
                 <h5 class="mb-1 text-xl font-medium text-white">{{ user.getFullName() }}</h5>
                 <span class="text-sm text-gray-400">Rôle : Parent</span>
+                    {% if (is_granted('ROLE_EDUCATOR')) and (educatorAvailability) %}
+                        <span class="text-sm text-gray-300 mt-1.5">Disponibilité du {{ educatorAvailability.getAvailableDateFrom()|date('d/m/Y') }} au {{ educatorAvailability.getAvailableDateTo()|date('d/m/Y') }} </span>
+                    {% endif %}
                 <div class="flex mt-4 space-x-3 md:mt-6">
                     <a href="{{ path('app_add_child') }}" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
                     <a href="#" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>
