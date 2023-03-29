@@ -1,6 +1,28 @@
 {{ form_start(form) }}
 
     <div class="space-y-6 mb-6">
+        {{ form_row(form.name, {
+            label: 'Nom',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: "Dauphin",
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+
+        {{ form_row(form.description, {
+            label: 'Description',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                placeholder: "Leçons de natation pour les enfants de 6 à 12 ans.",
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            }
+        }) }}
+
         {{ form_row(form.lessonsAmount, {
             label: 'Nombre de leçons',
             label_attr: {

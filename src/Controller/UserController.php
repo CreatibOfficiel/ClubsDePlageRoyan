@@ -56,7 +56,6 @@ class UserController extends AbstractController
                 $form->get('plainPasswordConfirm')->addError(new FormError('Les mots de passes ne correspondent pas'));
             }
 
-            var_dump($userDto);
             if ($form->isValid()) {
                 $user = new User();
                 $this->userService->addOrUpdate($userDto, $user);

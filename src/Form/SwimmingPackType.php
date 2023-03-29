@@ -12,6 +12,8 @@ class SwimmingPackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('name')
+            ->add('description')
             ->add('lessonsAmount')
             ->add('price')
         ;

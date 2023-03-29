@@ -40,6 +40,23 @@ class SwimmingPackBalance extends AbstractEntity
         return $this;
     }
 
+    public function setCalculateInitialAmount(): self
+    {
+        $amount = 0;
+        foreach ($this->swimmingPacks as $swimmingPack) {
+            $amount += $swimmingPack->getLessonsAmount();
+        }
+        $this->initialAmount = $amount;
+
+        return $this;
+    }
+
+    public function getCalculateRemainingAmount(): int
+    {
+        // TODO : check if bookingLessons are validated
+        return $this->initialAmount - $this->bookingLessons->count();
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
