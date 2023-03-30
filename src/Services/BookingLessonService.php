@@ -335,9 +335,13 @@ class BookingLessonService extends AbstractEntityService
         return false;
     }
 
-    public function validateShedule(UserInterface $user) {
+    public function validateShedule(UserInterface $user) : bool {
         $this->bookingData = $this->session->get('booking');
         $selectedDates = $this->bookingData['selectedDates'];
+
+        if ($user->getSwimmingPackBalance()->getCalculateRemainingAmount() < count($selectedDates)) {
+            return false;
+        }
 
         foreach ($selectedDates as $selectedDate) {
             $bookingLesson = new BookingLesson();
@@ -367,6 +371,7 @@ class BookingLessonService extends AbstractEntityService
             $this->bookingLessonRepository->save($bookingLesson, true);
         }
         $this->removeBookingSession();
+        return true;
     }
 
     public function removeBookingSession() {

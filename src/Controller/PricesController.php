@@ -65,7 +65,7 @@ class PricesController extends AbstractController
 
             $this->addFlash('success', 'Vous avez acheté un pack de ' . $swimmingPack->getLessonsAmount() . ' leçons !');
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_booking_lesson');
         }
 
         return $this->render('prices/buy.html.twig', [

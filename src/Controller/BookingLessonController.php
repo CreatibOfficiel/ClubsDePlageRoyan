@@ -132,23 +132,17 @@ class BookingLessonController extends AbstractController
         return $this->redirectToRoute('app_booking_lesson');
     }
 
-    #[Route('/booking/lesson/4', name: 'app_booking_lesson_4')]
-    public function bookingPage4index(): Response
-    {
-        $bookingData = $this->bookingLessonService->getBookingData();
-        return $this->render('booking_lesson/booking_lesson.html.twig', [
-            'controller_name' => 'BookingLessonController',
-            'page' => $bookingData['bookingPage'],
-        ]);
-    }
-
     #[Route('/booking/lesson/validateShedule', name: 'app_booking_lesson_validate_shedule')]
     public function bookingPageValidateSheduleIndex(): Response
     {
         $bookingData = $this->bookingLessonService->getBookingData();
-        $this->bookingLessonService->validateShedule($this->getUser());
+        $valid = $this->bookingLessonService->validateShedule($this->getUser());
 
-        return $this->redirectToRoute('app_home');
+        if ($valid) {
+            return $this->redirectToRoute('app_home');
+        } else {
+            return $this->redirectToRoute('app_prices');
+        }
     }
 
     #[Route('/booking/lesson/cancel', name: 'app_booking_lesson_cancel')]
