@@ -89,10 +89,7 @@ class BookingLessonController extends AbstractController
         $bookingData = $this->bookingLessonService->getBookingData();
 //        var_dump($bookingData);
 
-        $d1 = $bookingData['dateFrom'];
-        $d2 = $bookingData['dateTo'];
-        $weekNumber = $this->bookingLessonService->getWeekNumber();
-        $week = $this->bookingLessonService->getWeek($d1, $d2, $weekNumber);
+        $week = $this->bookingLessonService->getWeek();
 //        var_dump($week);
         return $this->render('booking_lesson/booking_lesson.html.twig', [
             'controller_name' => 'BookingLessonController',

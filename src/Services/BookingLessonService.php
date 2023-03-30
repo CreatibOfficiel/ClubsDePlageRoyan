@@ -124,35 +124,14 @@ class BookingLessonService extends AbstractEntityService
         }
     }
 
-    public function setBookingData(array $bookingData): void
-    {
-        $this->bookingData = $bookingData;
-        $this->session->set('booking', $this->bookingData);
-    }
-
     public function getClubs(): array
     {
         return $this->clubRepository->findAll();
     }
 
-    public function getEducatorsByClubId(int $clubId): array
-    {
-        return $this->educatorRepository->findBy(['club' => $clubId]);
-    }
-
-    public function getEducatorById(int $educatorId): Educator
-    {
-        return $this->educatorRepository->find($educatorId);
-    }
-
     public function getClubById(int $clubId): Club
     {
         return $this->clubRepository->find($clubId);
-    }
-
-    public function getTimeslotsByEducatorId(int $educatorId): array
-    {
-        return $this->timeSlotRepository->findBy(['educator' => $educatorId]);
     }
 
     public function setPage(int $page): void
@@ -205,50 +184,6 @@ class BookingLessonService extends AbstractEntityService
         $this->session->set('booking', $this->bookingData);
     }
 
-    public function getDateFrom(): DateTime
-    {
-        return $this->session->get('booking')['dateFrom'];
-    }
-
-    public function getDateTo(): DateTime
-    {
-        return $this->session->get('booking')['dateTo'];
-    }
-
-    public function getUserByEducatorId(int $educatorId): User
-    {
-        return $this->educatorRepository->find($educatorId)->getUser();
-    }
-
-    public function getUsersByRoleEducator(): array
-    {
-        return $this->userRepository->findBy(['roles' => 'ROLE_EDUCATOR']);
-    }
-
-    public function getUsersFullNameByRoleEducator(): array
-    {
-        $users = $this->getUsersByRoleEducator();
-        $usersFullName = [];
-        foreach ($users as $user) {
-            $usersFullName[$user->getId()] = $user->getFullName();
-        }
-//        return $usersFullName;
-        return [];
-    }
-
-
-    public function getSelectedClub(): Club
-    {
-        return $this->clubRepository->find($this->getClubId());
-    }
-
-    public function getChildsFromUser(int $id): array
-    {
-        $user = $this->userRepository->find($id);
-//        return $user->getChildrens()->toArray();
-        return [];
-    }
-
     public function setChildsId(int $childsId): void
     {
         $this->bookingData = $this->session->get('booking');
@@ -256,36 +191,12 @@ class BookingLessonService extends AbstractEntityService
         $this->session->set('booking', $this->bookingData);
     }
 
-    public function getChildsId(): int
-    {
-        return $this->getBookingData()['childsId'];
-    }
-
-    //clear session
-    public function clearSession(): void
-    {
-        $this->session->remove('booking');
-    }
-
-    public function getEducatorBySelectedClub(): array
-    {
-        return $this->educatorRepository->findBy(['club' => $this->getSelectedClub()->getId()]);
-    }
-
     public function getWeekNumber(): int
     {
         return $this->getBookingData()['weekNumber'];
     }
 
-    public function setWeekNumber(int $weekNumber): void
-    {
-        $this->bookingData = $this->session->get('booking');
-        $this->bookingData['weekNumber'] = $weekNumber;
-        $this->session->set('booking', $this->bookingData);
-    }
-
     public function getTime(DateTime $date): array {
-        //get array of 20 minutes DateTime between 10:00 and 18:00 for a specific day
         $time = [];
         $newDate = $date;
         $newDate->setTime(10, 0, 0);
@@ -293,14 +204,40 @@ class BookingLessonService extends AbstractEntityService
 
         for ($i = 0; $i < 24; $i++) {
             $newDate = new DateTime($newDate->format('Y-m-d H:i:s'));
-
             $time[] = $newDate->add(new DateInterval('PT20M'));
         }
         return $time;
     }
 
-    public function getWeek(DateTime $d1, DateTime $d2, int $weekNumber = 0): array
+    public function getPreviousMonday(DateTime $date): DateTime
     {
+        $dayOfWeek = $date->format('w');
+        $previousMonday = $date->sub(new DateInterval('P' . $dayOfWeek . 'D'));
+        return $previousMonday;
+    }
+
+    public function getPreviousMondayDays(DateTime $date): array
+    {
+        $newDate = new DateTime();
+        $newDate->setTimestamp($date->getTimestamp());
+        $previousMonday = $this->getPreviousMonday($newDate);
+        $days = [];
+        $interval = new DateInterval('P1D');
+        $period = new DatePeriod($previousMonday, $interval, $date);
+
+        foreach ($period as $day) {
+            $days[] = $day;
+        }
+
+        return $days;
+    }
+
+    public function getWeek(): array
+    {
+        $this->bookingData = $this->session->get('booking');
+        $weekNumber = $this->bookingData['weekNumber'];
+        $d1 = $this->bookingData['dateFrom'];
+        $d2 = $this->bookingData['dateTo'];
 
         $weekDay = [
                 'day' => '',
@@ -309,64 +246,57 @@ class BookingLessonService extends AbstractEntityService
                     'isAvailable' => true,
                     'isSelect' => false,
                 ],
+                'isAvailable' => true,
         ];
 
         $weekDays = [];
         $interval = new DateInterval('P1D');
         $period = new DatePeriod($d1, $interval, $d2);
+
         $week = [];
+        $prevDays = $this->getPreviousMondayDays($d1);
+        foreach ($prevDays as $day) {
+            $week[] = $day;
+        }
         foreach ($period as $day) {
             $week[] = $day;
         }
-
-        $bookingData = $this->session->get('booking');
 
         $days = array_slice($week, $weekNumber*7, 7);
         foreach ($days as $day) {
             $timesAlreadyBooked = $this->getEducatorTimeSlots();
             $times = [];
             foreach ($this->getTime($day) as $time) {
+                $isAvailable = true;
+                $isSelect = false;
                 if (in_array($time, $timesAlreadyBooked)) {
-                   $times[] = [
-                       'time' => $time,
-                       'isAvailable' => false,
-                       'isSelect' => false,
-                   ];
-               } elseif (in_array($time, $bookingData['selectedDates'])) {
-                   $times[] = [
-                       'time' => $time,
-                       'isAvailable' => true,
-                       'isSelect' => true,
-                   ];
-               } else {
-                   $times[] = [
-                       'time' => $time,
-                       'isAvailable' => true,
-                       'isSelect' => false,
-                   ];
+                   $isAvailable = false;
+               } elseif (in_array($time, $this->bookingData['selectedDates'])) {
+                   $isSelect = true;
                }
+                $times[] = [
+                    'time' => $time,
+                    'isAvailable' => $isAvailable,
+                    'isSelect' => $isSelect,
+                ];
             }
+
+            $isDayAvailable = true;
+
+            if ($day < $this->bookingData['dateFrom']) {
+                $isDayAvailable = false;
+            }
+
             $weekDay = [
                 'day' => $day,
                 'times' => $times,
+                'isAvailable' => $isDayAvailable
             ];
             if ($day->format('l') != 'Sunday') {
                 $weekDays[] = $weekDay;
             }
         }
         return $weekDays;
-    }
-
-    public function getSelectedDates(): array
-    {
-        return $this->getBookingData()['selectedDates'];
-    }
-
-    public function addSelectedDate(DateTime $date): void
-    {
-        $this->bookingData = $this->session->get('booking');
-        $this->bookingData['selectedDates'][] = $date;
-        $this->session->set('booking', $this->bookingData);
     }
 
     public function setSelectedDate(DateTime $date): void
@@ -411,15 +341,22 @@ class BookingLessonService extends AbstractEntityService
 
         foreach ($selectedDates as $selectedDate) {
             $bookingLesson = new BookingLesson();
-            $timeSlot = new TimeSlot();
 
-            $timeSlot->setEducator($this->educatorRepository->find($this->bookingData['educatorId']));
-            $timeSlot->setStartTime($selectedDate);
-            $newDate = $selectedDate;
-            $newDate = $newDate->add(new DateInterval('PT20M'));
-            $timeSlot->setEndTime($newDate);
+            //check if the time slot is already exist
+            $timeSlot = $this->timeSlotRepository->findOneBy([
+                'educator' => $this->educatorRepository->find($this->bookingData['educatorId']),
+                'startTime' => $selectedDate,
+            ]);
 
-            $this->timeSlotRepository->save($timeSlot, true);
+            if (!$timeSlot) {
+                $timeSlot = new TimeSlot();
+                $timeSlot->setEducator($this->educatorRepository->find($this->bookingData['educatorId']));
+                $newDate = new DateTime();
+                $newDate->setTimestamp($selectedDate->getTimestamp());
+                $timeSlot->setStartTime($selectedDate);
+                $timeSlot->setEndTime($newDate->add(new DateInterval('PT20M')));
+                $this->timeSlotRepository->save($timeSlot, true);
+            }
 
             $bookingLesson->setChilds($this->childRepository->find($this->bookingData['childsId']));
             $bookingLesson->setStatus("Booked");
@@ -442,7 +379,9 @@ class BookingLessonService extends AbstractEntityService
         $timeSlots = $educator->getTimeSlot();
         $timeSlotsArray = [];
         foreach ($timeSlots as $timeSlot) {
-            $timeSlotsArray[] = $timeSlot->getStartTime();
+            if ($timeSlot->getBookingLessonsCount() > 2) {
+                $timeSlotsArray[] = $timeSlot->getStartTime();
+            }
         }
         return $timeSlotsArray;
     }

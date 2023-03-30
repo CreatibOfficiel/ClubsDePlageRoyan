@@ -94,4 +94,9 @@ class TimeSlot extends AbstractEntity
 
         return $this;
     }
+
+    public function getBookingLessonsCount(): int
+    {
+        return $this->bookingLessons->count();
+    }
 }
