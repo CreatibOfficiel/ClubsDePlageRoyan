@@ -23,6 +23,29 @@ class UserRepository extends AbstractRepository
         return $this->findOneBy(['mail' => $mail]);
     }
 
+//$er->createQueryBuilder('u')
+//->join('u.educator', 'e')
+//->where("u.roles LIKE 'ROLE_EDUCATOR'")
+//->andWhere("e.club_id LIKE :club_id")
+//->setParameters([
+//'club_id' => $options['club'],
+//])
+
+//get user with role educator and club_id = $id
+
+    public function findByEducatorByClub($clubId)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->join('u.educator', 'e')
+            ->where("u.roles LIKE 'ROLE_EDUCATOR'")
+            ->andWhere("e.club_id = :clubId")
+            ->setParameters([
+                'clubId' => $clubId,
+            ]);
+        return $qb;
+    }
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

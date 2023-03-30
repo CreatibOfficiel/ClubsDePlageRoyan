@@ -11,13 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TimeSlotRepository::class)]
 class TimeSlot extends AbstractEntity
 {
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
-
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $startTime = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $endTime = null;
 
     #[ORM\ManyToOne(inversedBy: 'timeSlot')]
@@ -30,18 +27,6 @@ class TimeSlot extends AbstractEntity
     public function __construct()
     {
         $this->bookingLessons = new ArrayCollection();
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 
     public function getStartTime(): ?\DateTimeInterface
