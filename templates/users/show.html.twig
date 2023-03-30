@@ -45,7 +45,7 @@
                     <span class="text-sm text-gray-300 mt-1.5">Disponibilité du {{ educatorAvailability.getAvailableDateFrom()|date('d/m/Y') }} au {{ educatorAvailability.getAvailableDateTo()|date('d/m/Y') }} </span>
                 {% endif %}
 
-                <span class="text-sm text-gray-400 mt-1.5">Nombre de leçons disponible : {{ user.getSwimmingPackBalance().getCalculateRemainingAmount() }}</span>
+                <span class="text-sm text-gray-400 mt-1.5">Nombre de leçons disponibles : {{ user.getSwimmingPackBalance().getCalculateRemainingAmount() }}</span>
                 <div class="flex mt-4 space-x-3 md:mt-6">
                     <a href="{{ path('app_add_child') }}" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
                     <a href="#" class="border border-gray-500 inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>
@@ -97,7 +97,7 @@
                     {% else %}
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <table class="w-full text-sm text-left text-gray-400">
-                                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                                <thead class="text-xs uppercase bg-gray-700 text-gray-400 block">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Carte bleue
@@ -113,7 +113,7 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="block overflow-y-scroll max-h-64">
                                 {% for order in user.getOrders() %}
                                     <tr class="border-b bg-gray-900 border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
@@ -126,15 +126,19 @@
                                             {{ order.getSwimmingPack().getPrice() }} €
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                {% if order.getStatus() == 'VALIDATED' %}
-                                                    Payé
-                                                {% elseif order.getStatus() == 'PENDING' %}
+                                            {% if order.getStatus() == 'VALIDATED' %}
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Payée
+                                                </span>
+                                            {% elseif order.getStatus() == 'PENDING' %}
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                                     En attente
-                                                {% elseif order.getStatus() == 'CANCELLED' %}
-                                                    Annulé
-                                                {% endif %}
-                                            </span>
+                                                </span>
+                                            {% elseif order.getStatus() == 'CANCELLED' %}
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Annulée
+                                                </span>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

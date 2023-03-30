@@ -9,6 +9,7 @@ use App\Form\CardType;
 use App\Repository\OrderRepository;
 use App\Repository\SwimmingPackBalanceRepository;
 use App\Repository\SwimmingPackRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class PricesController extends AbstractController
     }
 
     #[Route('/buy/{id}', name: 'swimming_pack_buy')]
-    public function buy(Request $request, SwimmingPackRepository $swimmingPackRepository, SwimmingPackBalanceRepository $swimmingPackBalanceRepository, OrderRepository $orderRepository, $id): Response
+    public function buy(Request $request, SwimmingPackRepository $swimmingPackRepository, SwimmingPackBalanceRepository $swimmingPackBalanceRepository, OrderRepository $orderRepository, UserRepository $userRepository, $id): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -48,7 +49,6 @@ class PricesController extends AbstractController
 
             $swimmingPackBalance = $user->getSwimmingPackBalance();
             $swimmingPackBalance->addSwimmingPack($swimmingPack);
-            $swimmingPackBalance->setCalculateInitialAmount();
 
             $order = new Order();
             $order->setUser($user);
@@ -59,8 +59,9 @@ class PricesController extends AbstractController
             $checkDigit = substr($cardDto->cardNumber, -4);
             $order->setCheckDigit($checkDigit);
 
-            $orderRepository->save($order, true);
-            $swimmingPackBalanceRepository->save($swimmingPackBalance, true);
+            $orderRepository->save($order);
+            $swimmingPackBalanceRepository->save($swimmingPackBalance);
+            $userRepository->save($user, true);
 
             $this->addFlash('success', 'Vous avez acheté un pack de ' . $swimmingPack->getLessonsAmount() . ' leçons !');
 

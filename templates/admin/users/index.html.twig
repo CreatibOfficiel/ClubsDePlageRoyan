@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
     <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-400">
@@ -16,6 +15,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Rôle
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nombre de leçons
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Nombre d'enfants
@@ -34,6 +36,9 @@
                     </th>
                     <td class="px-6 py-4">
                         {{ user.getStringRoles() }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ user.getSwimmingPackBalance().getCalculateRemainingAmount() }}
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center">

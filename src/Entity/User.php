@@ -72,6 +72,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->setPhoneNumber($dto->phoneNumber);
         $this->setAddress($dto->address);
         $this->setMail($dto->mail);
+        $this->swimmingPackBalance->setInitialAmount($dto->lessonInitialAmount);
         if ($dto->role) {
             $this->setRoles([$dto->role]);
         }

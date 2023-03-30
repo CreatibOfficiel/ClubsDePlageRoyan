@@ -7,7 +7,7 @@
 {% block body %}
     <div class="p-4 space-y-4 place-content-center bg-gray-900 min-h-screen text-center">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Interface admin</h2>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 gap-4">
             <div class="p-6 sm:p-8 col-span-1 flex flex-col space-y-4 md:space-y-6 rounded-lg w-full bg-gray-800">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <a href="{{ path('app_admin_users_index') }}">
@@ -28,6 +28,14 @@
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <a href="{{ path('app_admin_clubs_index') }}">
                         Gestion des clubs
+                    </a>
+                </button>
+            </div>
+
+            <div class="p-6 sm:p-8 col-span-1 flex flex-col space-y-4 md:space-y-6 rounded-lg w-full bg-gray-800">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="{{ path('app_admin_orders_index') }}">
+                        Gestion des commandes
                     </a>
                 </button>
             </div>

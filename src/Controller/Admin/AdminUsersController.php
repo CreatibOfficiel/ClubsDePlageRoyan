@@ -34,7 +34,7 @@ class AdminUsersController extends AbstractController
     #[Route('/{id}', name: 'app_admin_users_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('admin/users/show.html.twig', [
+        return $this->render('admin/users/index.html.twig', [
             'user' => $user,
         ]);
     }
@@ -45,7 +45,7 @@ class AdminUsersController extends AbstractController
         $userDto = new UserDto();
         $userDto->setFromEntity($user);
 
-        $form = $this->createForm(UserType::class, $userDto);
+        $form = $this->createForm(UserType::class, $userDto, ['attr' => ['isNotAdmin' => false]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

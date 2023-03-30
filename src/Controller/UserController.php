@@ -48,7 +48,7 @@ class UserController extends AbstractController
         $userDto = new UserDto();
         $userDto->role = 'ROLE_USER';
 
-        $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add']]);
+        $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add'], 'attr' => ['isNotAdmin' => true]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -87,7 +87,7 @@ class UserController extends AbstractController
         $userDto = new UserDto();
         $userDto->setFromEntity($user);
 
-        $form = $this->createForm(UserType::class, $userDto);
+        $form = $this->createForm(UserType::class, $userDto, ['attr' => ['isNotAdmin' => true]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

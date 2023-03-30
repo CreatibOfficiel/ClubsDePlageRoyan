@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste des commandes
+{% endblock %}
+
+{% block body %}
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-400">
+                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Date
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Statut
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        CheckDigit
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Id
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-right">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr class="border-b bg-gray-800 border-gray-700">
+                        <th class="px-6 py-4">
+                            {{ order.date ? order.date|date('Y-m-d H:i:s') : '' }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ order.status }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.checkDigit }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.id }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <form action="{{ path('app_admin_orders_edit', {'id': order.id}) }}" method="post">
+                                <select name="status" id="status" onchange="this.form.submit()">
+                                    <option value="0" {% if order.status == 'PENDING' %}selected{% endif %}>En attente</option>
+                                    <option value="1" {% if order.status == 'CANCELLED' %}selected{% endif %}>Annulée</option>
+                                    <option value="2" {% if order.status == 'VALIDATED' %}selected{% endif %}>Payée</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

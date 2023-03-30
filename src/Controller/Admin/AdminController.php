@@ -16,6 +16,6 @@ class AdminController extends AbstractController
     #[Route('/', name: 'app_admin_index', methods: ['GET'])]
     public function index(ClubRepository $clubRepository): Response
     {
-        return $this->render('admin/show.html.twig');
+        return $this->render('admin/index.html.twig');
     }
 }
