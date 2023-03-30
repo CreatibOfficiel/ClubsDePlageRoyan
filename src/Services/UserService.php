@@ -46,4 +46,17 @@ class UserService extends AbstractEntityService
         $user->setLastLogin(new DateTime());
         $this->repository->save($user, true);
     }
+
+    // get user by role Educator and return array of user
+    public function getEducatorByClubId($id): array
+    {
+        $educators = $this->repository->findByRole('ROLE_EDUCATOR');
+        $educatorArray = [];
+        foreach ($educators as $educator) {
+            if ($educator->getEducator()->getClub()->getId() === $id) {
+                $educatorArray[] = $educator;
+            }
+        }
+        return $educatorArray;
+    }
 }
