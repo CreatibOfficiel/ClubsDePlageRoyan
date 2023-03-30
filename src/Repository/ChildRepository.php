@@ -19,8 +19,6 @@ class ChildRepository extends AbstractRepository
         parent::__construct($registry, Child::class);
     }
 
-
-
 //    /**
 //     * @return Child[] Returns an array of Child objects
 //     */

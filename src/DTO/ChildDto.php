@@ -7,7 +7,6 @@ use App\Entity\Child;
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class ChildDto extends AbstractDto
 {

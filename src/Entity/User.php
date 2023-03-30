@@ -51,10 +51,15 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?SwimmingPackBalance $swimmingPackBalance = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, orphanRemoval: true)]
+    private Collection $orders;
+
     public function __construct()
     {
         $this->childrens = new ArrayCollection();
+        $this->setSwimmingPackBalance(new SwimmingPackBalance());
         $this->roles = ['ROLE_USER'];
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -67,6 +72,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->setPhoneNumber($dto->phoneNumber);
         $this->setAddress($dto->address);
         $this->setMail($dto->mail);
+        $this->swimmingPackBalance->setInitialAmount($dto->lessonInitialAmount);
         if ($dto->role) {
             $this->setRoles([$dto->role]);
         }
@@ -230,6 +236,10 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     public function getSwimmingPackBalance(): ?SwimmingPackBalance
     {
+        if ($this->swimmingPackBalance === null) {
+            $this->setSwimmingPackBalance(new SwimmingPackBalance());
+        }
+
         return $this->swimmingPackBalance;
     }
 
@@ -256,5 +266,35 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     public function getUserIdentifier(): string
     {
         return $this->getMail();
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

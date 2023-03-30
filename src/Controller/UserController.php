@@ -48,7 +48,7 @@ class UserController extends AbstractController
         $userDto = new UserDto();
         $userDto->role = 'ROLE_USER';
 
-        $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add']]);
+        $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add'], 'attr' => ['isNotAdmin' => true]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -56,7 +56,6 @@ class UserController extends AbstractController
                 $form->get('plainPasswordConfirm')->addError(new FormError('Les mots de passes ne correspondent pas'));
             }
 
-            var_dump($userDto);
             if ($form->isValid()) {
                 $user = new User();
                 $this->userService->addOrUpdate($userDto, $user);
@@ -88,7 +87,7 @@ class UserController extends AbstractController
         $userDto = new UserDto();
         $userDto->setFromEntity($user);
 
-        $form = $this->createForm(UserType::class, $userDto);
+        $form = $this->createForm(UserType::class, $userDto, ['attr' => ['isNotAdmin' => true]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

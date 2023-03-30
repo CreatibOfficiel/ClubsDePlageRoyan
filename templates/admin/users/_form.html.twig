@@ -44,7 +44,7 @@
             }
         }) }}
     </div>
-    <div class="space-y-6">
+    <div class="mb-6">
 
         {{ form_row(form.mail, {
             label: 'Adresse mail',
@@ -57,6 +57,9 @@
             }
         }) }}
 
+    </div>
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+
         {{ form_row(form.role, {
             label: 'Rôle',
             label_attr: {
@@ -66,6 +69,19 @@
                 class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500",
             },
         }) }}
+
+        {{ form_row(form.lessonInitialAmount, {
+            label: 'Nombre de leçons initiales',
+            label_attr: {
+                class: "block mb-2 text-sm font-medium text-white"
+            },
+            attr: {
+                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500",
+            },
+        }) }}
+
+    </div>
+    <div class="space-y-6">
 
         {{ form_row(form.password, {
             label: 'Mot de passe',

@@ -40,6 +40,24 @@ class SwimmingPackBalance extends AbstractEntity
         return $this;
     }
 
+    /*public function setCalculateInitialAmount(): self
+    {
+        $amount = 0;
+        foreach ($this->swimmingPacks as $swimmingPack) {
+            $amount += $swimmingPack->getLessonsAmount();
+            var_dump($amount . ' ' . $swimmingPack->getLessonsAmount());
+        }
+        $this->initialAmount = $amount;
+
+        return $this;
+    }*/
+
+    public function getCalculateRemainingAmount(): int
+    {
+        // TODO : check if bookingLessons are validated
+        return $this->initialAmount - $this->bookingLessons->count();
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -65,6 +83,8 @@ class SwimmingPackBalance extends AbstractEntity
         if (!$this->swimmingPacks->contains($swimmingPack)) {
             $this->swimmingPacks->add($swimmingPack);
         }
+
+        $this->initialAmount += $swimmingPack->getLessonsAmount();
 
         return $this;
     }

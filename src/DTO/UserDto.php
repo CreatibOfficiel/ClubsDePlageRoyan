@@ -35,6 +35,9 @@ class UserDto extends AbstractDto
     #[Assert\NotBlank]
     public string $role;
 
+    #[Assert\NotBlank]
+    public int $lessonInitialAmount;
+
     public bool $isNew = true;
 
     /**
@@ -49,5 +52,6 @@ class UserDto extends AbstractDto
         $this->phoneNumber = $user->getPhoneNumber();
         $this->mail = $user->getMail();
         $this->role = $user->getStringRoles();
+        $this->lessonInitialAmount = $user->getSwimmingPackBalance()->getInitialAmount();
     }
 }

@@ -19,9 +19,19 @@ class SwimmingPack extends AbstractEntity
     #[ORM\ManyToMany(targetEntity: SwimmingPackBalance::class, mappedBy: 'swimmingPacks')]
     private Collection $swimmingPackBalances;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\OneToMany(mappedBy: 'swimmingPack', targetEntity: Order::class)]
+    private Collection $orders;
+
     public function __construct()
     {
         $this->swimmingPackBalances = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getLessonsAmount(): ?int
@@ -70,6 +80,60 @@ class SwimmingPack extends AbstractEntity
     {
         if ($this->swimmingPackBalances->removeElement($swimmingPackBalance)) {
             $swimmingPackBalance->removeSwimmingPAck($this);
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setSwimmingPack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getSwimmingPack() === $this) {
+                $order->setSwimmingPack(null);
+            }
         }
 
         return $this;
