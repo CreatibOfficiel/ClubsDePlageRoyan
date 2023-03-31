@@ -7,13 +7,13 @@
 {% block body %}
     <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
         <div class="flex flex-row justify-start">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
-            <a href="{{ path('app_booking_page_back') }}">Retour</a>
-        </button>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
-            <a href="{{ path('app_booking_lesson_cancel') }}">Annuler</a>
-        </button>
-        <h1 class="text-gray-300">Page: {{ page }}</h1>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
+                <a href="{{ path('app_booking_page_back') }}">Retour</a>
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
+                <a href="{{ path('app_booking_lesson_cancel') }}">Annuler</a>
+            </button>
+            <h1 class="text-gray-300">Etape {{ page }}/3</h1>
     </div>
 
         {% if page is same as 1 %}

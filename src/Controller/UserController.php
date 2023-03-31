@@ -47,6 +47,7 @@ class UserController extends AbstractController
 
         $userDto = new UserDto();
         $userDto->role = 'ROLE_USER';
+        $userDto->lessonInitialAmount = 0;
 
         $form = $this->createForm(RegistrationFormType::class, $userDto, ['validation_groups' => ['Default', 'add'], 'attr' => ['isNotAdmin' => true]]);
         $form->handleRequest($request);
