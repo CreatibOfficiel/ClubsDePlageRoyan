@@ -6,21 +6,57 @@
 
 {% block body %}
     <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
-        <div class="flex flex-row justify-start">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
-                <a href="{{ path('app_booking_page_back') }}">Retour</a>
-            </button>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2.5">
-                <a href="{{ path('app_booking_lesson_cancel') }}">Annuler</a>
+        <div class="flex flex-row justify-center items-center space-x-2">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ path('app_booking_page_back') }}">Retour à l'étape précédente</a>
             </button>
             <h1 class="text-gray-300">Etape {{ page }}/3</h1>
-    </div>
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                <a href="{{ path('app_booking_lesson_cancel') }}">Annuler la recherche</a>
+            </button>
+        </div>
 
-        {% if page is same as 1 %}
-            <div class="space-y-6">
-                {{ form_start(form) }}
+        <div class="flex justify-center">
+            {% if page is same as 1 %}
+                <div class="flex flex-col space-y-4">
+                    {{ form_start(form) }}
+                        <div class="grid gap-6 mb-6">
+                            {{ form_row(form.dateFrom, {
+                                label_attr: {
+                                    class: "block mb-2 text-sm font-medium text-white"
+                                },
+                                attr: {
+                                    class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                }
+                            }) }}
+
+                            {{ form_row(form.dateTo, {
+                                label_attr: {
+                                    class: "block mb-2 text-sm font-medium text-white"
+                                },
+                                attr: {
+                                    class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                }
+                            }) }}
+                            {{ form_row(form.club, {
+                                label_attr: {
+                                    class: "block mb-2 text-sm font-medium text-white"
+                                },
+                                attr: {
+                                    class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                                }
+                            }) }}
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Valider
+                        </button>
+                    {{ form_end(form) }}
+                </div>
+            {% elseif page is same as 2 %}
+                <div class="space-y-6">
+                    {{ form_start(form) }}
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
-                        {{ form_row(form.dateFrom, {
+                        {{ form_row(form.educator, {
                             label_attr: {
                                 class: "block mb-2 text-sm font-medium text-white"
                             },
@@ -29,7 +65,7 @@
                             }
                         }) }}
 
-                        {{ form_row(form.dateTo, {
+                        {{ form_row(form.child, {
                             label_attr: {
                                 class: "block mb-2 text-sm font-medium text-white"
                             },
@@ -37,110 +73,77 @@
                                 class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                             }
                         }) }}
-                        {{ form_row(form.club, {
-                            label_attr: {
-                                class: "block mb-2 text-sm font-medium text-white"
-                            },
-                            attr: {
-                                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                            }
-                        }) }}
-
                     </div>
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Valider
                     </button>
-                {{ form_end(form) }}
-            </div>
-        {% elseif page is same as 2 %}
-            <div class="space-y-6">
-                {{ form_start(form) }}
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
-                    {{ form_row(form.educator, {
-                        label_attr: {
-                            class: "block mb-2 text-sm font-medium text-white"
-                        },
-                        attr: {
-                            class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                        }
-                    }) }}
-
-                    {{ form_row(form.child, {
-                        label_attr: {
-                            class: "block mb-2 text-sm font-medium text-white"
-                        },
-                        attr: {
-                            class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                        }
-                    }) }}
+                    {{ form_end(form) }}
                 </div>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Valider
-                </button>
-                {{ form_end(form) }}
-            </div>
-        {% elseif page is same as 3 %}
-            <div class="flex flex-row justify-around">
-                <div class="flex min-w-max flex-row">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        <a href="{{ path('app_booking_page_prev_calendar') }}"><</a>
-                    </button>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        <a href="{{ path('app_booking_page_next_calendar') }}">></a>
-                    </button>
-                </div>
-                <div class="flex min-w-max flex-row">
-                    {% if isSelectedDate %}
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            <a href="{{ path('app_booking_lesson_validate_shedule') }}">Valider</a>
-                        </button>
-                    {% else %}
-                        <button class="bg-gray-700 text-white font-bold py-2 px-4 rounded" disabled>
-                            <a>Valider</a>
-                        </button>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="grid gap-6 mb-6 md:grid-cols-6 mb-2.5">
-                {% for day in week %}
-                    {% if day['isAvailable'] %}
-                        <div class="block border border-gray-600 rounded-lg p-4">
-                            <p class="text-center text-white">{{ day['day']|date("l") }}</p>
-                            <p class="text-center text-white">{{ day['day']|date("d/m/Y") }}</p>
-                            <div class="flex flex-col justify-center">
-                                {% for hour in day['times'] %}
-                                    {%  if not hour['isAvailable'] %}
-                                        <div class="block border text-center border-gray-600 rounded-lg p-4 bg-red-800 mb-2.5">
-                                            <a class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
-                                        </div>
-                                    {% elseif hour['isSelect'] %}
-                                        <div class="block border text-center border-gray-600 rounded-lg p-4 bg-green-500 mb-2.5">
-                                            <a href="{{ path('app_booking_page_add_or_remove_date', {'date': hour['time']|date("d-m-Y_H:i")}) }}" class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
-                                        </div>
-                                    {% else %}
-                                        <div class="block border text-center border-gray-600 rounded-lg p-4 hover:bg-blue-600 mb-2.5">
-                                            <a href="{{ path('app_booking_page_add_or_remove_date', {'date': hour['time']|date("d-m-Y_H:i")}) }}" class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+            {% elseif page is same as 3 %}
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flex space-x-8">
+                        <div class="flex min-w-max flex-row space-x-2">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <a href="{{ path('app_booking_page_prev_calendar') }}"><</a>
+                            </button>
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                <a href="{{ path('app_booking_page_next_calendar') }}">></a>
+                            </button>
                         </div>
-                    {% else %}
-                        <div class="block border border-gray-600 bg-neutral-700 rounded-lg p-4">
-                            <p class="text-center text-white">{{ day['day']|date("l") }}</p>
-                            <p class="text-center text-white">{{ day['day']|date("d/m/Y") }}</p>
-                            <div class="flex flex-col justify-center">
-                                {% for hour in day['times'] %}
-                                    <div class="block border text-center border-gray-600 bg-neutral-800 rounded-lg p-4 mb-2.5">
-                                        <a class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
+                        <div class="flex min-w-max flex-row">
+                            {% if isSelectedDate %}
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    <a href="{{ path('app_booking_lesson_validate_shedule') }}">Valider</a>
+                                </button>
+                            {% else %}
+                                <button class="bg-gray-700 text-white font-bold py-2 px-4 rounded" disabled>
+                                    <a>Valider</a>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="grid gap-6 mb-6 md:grid-cols-6 mb-2.5">
+                        {% for day in week %}
+                            {% if day['isAvailable'] %}
+                                <div class="block border border-gray-600 rounded-lg p-4">
+                                    <p class="text-center text-white">{{ day['day']|date("l") }}</p>
+                                    <p class="text-center text-white">{{ day['day']|date("d/m/Y") }}</p>
+                                    <div class="flex flex-col justify-center">
+                                        {% for hour in day['times'] %}
+                                            {%  if not hour['isAvailable'] %}
+                                                <div class="block border text-center border-gray-600 rounded-lg p-4 bg-red-800 mb-2.5">
+                                                    <a class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
+                                                </div>
+                                            {% elseif hour['isSelect'] %}
+                                                <div class="block border text-center border-gray-600 rounded-lg p-4 bg-green-500 mb-2.5">
+                                                    <a href="{{ path('app_booking_page_add_or_remove_date', {'date': hour['time']|date("d-m-Y_H:i")}) }}" class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="block border text-center border-gray-600 rounded-lg p-4 hover:bg-blue-600 mb-2.5">
+                                                    <a href="{{ path('app_booking_page_add_or_remove_date', {'date': hour['time']|date("d-m-Y_H:i")}) }}" class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="block border border-gray-600 bg-neutral-700 rounded-lg p-4">
+                                    <p class="text-center text-white">{{ day['day']|date("l") }}</p>
+                                    <p class="text-center text-white">{{ day['day']|date("d/m/Y") }}</p>
+                                    <div class="flex flex-col justify-center">
+                                        {% for hour in day['times'] %}
+                                            <div class="block border text-center border-gray-600 bg-neutral-800 rounded-lg p-4 mb-2.5">
+                                                <a class="text-center text-white">{{ hour['time']|date("H:i") }}</a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
