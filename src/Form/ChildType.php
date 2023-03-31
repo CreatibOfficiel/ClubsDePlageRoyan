@@ -22,11 +22,12 @@ class ChildType extends AbstractType
             ])
             ->add('birthdate', DateType::class, [
                 'label' => 'Date de naissance',
-                'widget' => 'choice',
-                'format' => 'ddMMMMyyyy',
-                'days' => range(1,31),
-                'months' => range(1,12),
-                'years' => range(date('Y'), date('Y')-20)
+                'widget' => 'single_text',
+                'html5' => true,
+//                'format' => 'ddMMMMyyyy',
+//                'days' => range(1,31),
+//                'months' => range(1,12),
+//                'years' => range(date('Y'), date('Y')-20)
             ])
         ;
     }

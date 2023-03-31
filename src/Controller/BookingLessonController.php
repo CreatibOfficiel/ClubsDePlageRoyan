@@ -23,9 +23,7 @@ class BookingLessonController extends AbstractController
     #[Route('/booking/lesson', name: 'app_booking_lesson')]
     public function index(): Response
     {
-//        $this->bookingLessonService->setPage(1);
         $bookingData = $this->bookingLessonService->getBookingData();
-        
         return $this->redirectToRoute('app_booking_lesson_' . $bookingData['bookingPage']);
     }
 
@@ -63,7 +61,7 @@ class BookingLessonController extends AbstractController
         $bookingPageDto = new BookingLessonPagesDto();
 
         $form = $this->createForm(BookingLessonPage2Type::class, $bookingPageDto, [
-            'educator' => $this->getUser()->getEducator(),
+            'educator' => $this->bookingLessonService->getEducatorByClubId(),
             'user' => $this->getUser(),
             'club' => $this->bookingLessonService->getClubById($bookingData['clubId']),
         ]);
@@ -87,10 +85,8 @@ class BookingLessonController extends AbstractController
     public function bookingPage3index(): Response
     {
         $bookingData = $this->bookingLessonService->getBookingData();
-//        var_dump($bookingData);
 
         $week = $this->bookingLessonService->getWeek();
-//        var_dump($week);
         return $this->render('booking_lesson/booking_lesson.html.twig', [
             'controller_name' => 'BookingLessonController',
             'page' => $bookingData['bookingPage'],

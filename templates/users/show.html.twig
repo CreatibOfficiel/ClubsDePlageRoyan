@@ -48,7 +48,7 @@
                 <span class="text-sm text-gray-400 mt-1.5">Nombre de leçons disponibles : {{ user.getSwimmingPackBalance().getCalculateRemainingAmount() }}</span>
                 <div class="flex mt-4 space-x-3 md:mt-6">
                     <a href="{{ path('app_add_child') }}" class="inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Ajouter un enfant</a>
-                    <a href="#" class="border border-gray-500 inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>
+                    <a href="{{ path('app_booked') }}" class="border border-gray-500 inline-flex items-center rounded px-4 py-2 text-sm font-medium text-center text-gray-900 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-700 focus:ring-gray-700">Gérer mes réservations</a>
                 </div>
                 {% if (is_granted('ROLE_ADMIN')) %}
                     <button class="mt-2 bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded">
@@ -89,65 +89,114 @@
                 </div>
             </div>
 
-            <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
-                <div class="mx-auto max-w-screen-sm text-center">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white mb-8 lg:mb-16">Historique des commandes</h2>
-                    {% if user.getOrders()|length == 0 %}
-                        <p class="text-xl text-gray-400">Vous n'avez pas encore acheté de forfait ? <a href="{{ path('app_prices') }}" class="text-blue-500 hover:underline">Acheter un forfait</a></p>
-                    {% else %}
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left text-gray-400">
-                                <thead class="text-xs uppercase bg-gray-700 text-gray-400 block">
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_EDUCATOR') %}
+{#                <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">#}
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white mb-8 lg:mb-16">Prochains cours</h2>
+                        {% if nextCourses|length == 0 %}
+                            <p class="text-xl text-gray-400">Vous n'avez pas de cours prévus</p>
+                        {% endif %}
+
+                        <table class="w-full text-sm text-left text-gray-400 rounded-lg overflow-x-auto">
+                            <thead class="text-xs uppercase bg-gray-700 text-gray-400 rounded-lg">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Carte bleue
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-center">
                                         Date
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Montant
+                                    <th scope="col" class="px-6 py-3 text-center">
+                                        Debut
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Statut
+                                    <th scope="col" class="px-6 py-3 text-center">
+                                        Fin
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-center">
+                                        Enfants
                                     </th>
                                 </tr>
-                                </thead>
-                                <tbody class="block overflow-y-scroll max-h-64">
-                                {% for order in user.getOrders() %}
-                                    <tr class="border-b bg-gray-900 border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
-                                            ...{{ order.getCheckDigit() }}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            {{ order.getDate()|date('d/m/Y') }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ order.getSwimmingPack().getPrice() }} €
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {% if order.getStatus() == 'VALIDATED' %}
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    Payée
-                                                </span>
-                                            {% elseif order.getStatus() == 'PENDING' %}
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                    En attente
-                                                </span>
-                                            {% elseif order.getStatus() == 'CANCELLED' %}
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                    Annulée
-                                                </span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% endif %}
+                            </thead>
+                            <tbody>
+                            {% for course in nextCourses %}
+                                <tr class="border-b bg-gray-800 border-gray-700 h-fit rounded-lg max-h-7 overflow-y-scroll">
+                                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                                        {{ course['courseStart']|date('d/m/Y') }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ course['courseStart']|date('H:i') }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ course['courseEnd']|date('H:i') }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ course['nbChild'] }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
+                    <div class="mx-auto max-w-screen-sm text-center">
+                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white mb-8 lg:mb-16">Historique des commandes</h2>
+                        {% if user.getOrders()|length == 0 %}
+                            <p class="text-xl text-gray-400">Vous n'avez pas encore acheté de forfait ? <a href="{{ path('app_prices') }}" class="text-blue-500 hover:underline">Acheter un forfait</a></p>
+                        {% else %}
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs uppercase bg-gray-700 text-gray-400 block">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Carte bleue
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Date
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Montant
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Statut
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="block max-h-64">
+                                    {% for order in user.getOrders() %}
+                                        <tr class="border-b bg-gray-900 border-gray-700">
+                                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                                                ...{{ order.getCheckDigit() }}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                {{ order.getDate()|date('d/m/Y') }}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {{ order.getSwimmingPack().getPrice() }} €
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {% if order.getStatus() == 'VALIDATED' %}
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        Payée
+                                                    </span>
+                                                {% elseif order.getStatus() == 'PENDING' %}
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                        En attente
+                                                    </span>
+                                                {% elseif order.getStatus() == 'CANCELLED' %}
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                        Annulée
+                                                    </span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -20,6 +20,23 @@
             <div class="space-y-6">
                 {{ form_start(form) }}
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        {{ form_row(form.dateFrom, {
+                            label_attr: {
+                                class: "block mb-2 text-sm font-medium text-white"
+                            },
+                            attr: {
+                                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                            }
+                        }) }}
+
+                        {{ form_row(form.dateTo, {
+                            label_attr: {
+                                class: "block mb-2 text-sm font-medium text-white"
+                            },
+                            attr: {
+                                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                            }
+                        }) }}
                         {{ form_row(form.club, {
                             label_attr: {
                                 class: "block mb-2 text-sm font-medium text-white"
@@ -29,23 +46,6 @@
                             }
                         }) }}
 
-                        {{ form_row(form.dateFrom, {
-                            label_attr: {
-                                class: "block mb-2 text-sm font-medium text-white"
-                            },
-                            attr: {
-                                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-grey-900 focus:ring-blue-500 focus:border-blue-500"
-                            }
-                        }) }}
-
-                        {{ form_row(form.dateTo, {
-                            label_attr: {
-                                class: "block mb-2 text-sm font-medium text-white"
-                            },
-                            attr: {
-                                class: "border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-grey-900 focus:ring-blue-500 focus:border-blue-500"
-                            }
-                        }) }}
                     </div>
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Valider

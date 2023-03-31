@@ -59,4 +59,27 @@ class UserService extends AbstractEntityService
         }
         return $educatorArray;
     }
+
+    public function getNextCourses(User $user): array
+    {
+        $courses = [];
+        $educatorCourses = $user->getEducator()->getTimeSlot();
+        $educatorCourses = $educatorCourses->toArray();
+
+        //order by date ASC
+        usort($educatorCourses, function ($a, $b) {
+            return $a->getStartTime() <=> $b->getStartTime();
+        });
+
+        foreach ($educatorCourses as $educatorCourse) {
+            if ($educatorCourse->getStartTime() >= new \DateTime()) {
+                $courses[] = [
+                    'courseStart' => $educatorCourse->getStartTime(),
+                    'courseEnd' => $educatorCourse->getEndTime(),
+                    'nbChild' => $educatorCourse->getBookingLessons()->count(),
+                ];
+            }
+        }
+        return $courses;
+    }
 }
