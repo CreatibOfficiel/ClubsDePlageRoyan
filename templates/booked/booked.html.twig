@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes réservations{% endblock %}
+
+{% block body %}
+<div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+    <h1 class="text-4xl text-center text-white">Mes réservations</h1>
+
+    <div class="p-4 space-y-8 place-content-center bg-gray-900 grid grid-cols-3">
+        {% for childData in childsData %}
+            <div class="p-4 space-y-4 place-content-center bg-gray-900 rounded-lg w-2/5">
+                <h2 class="text-2xl text-center text-white w-full ">{{ childData['name'] }}</h2>
+                <table class="w-full text-sm text-left text-gray-400 overflow-x-auto">
+                    <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+                    <tr class="text-center">
+                        <th scope="col" class="px-6 py-3 text-center">Date</th>
+                        <th scope="col" class="px-6 py-3 text-center">Horaires</th>
+                        <th scope="col" class="px-6 py-3 text-center">Educateur</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for timeSlot in childData['timeSlots'] %}
+                        <tr class="border-b bg-gray-800 border-gray-700 h-fit rounded-lg max-h-7 overflow-y-scroll text-center">
+                            <td class="px-4 py-2">{{ timeSlot.getStartTime|date("d/m/Y") }}</td>
+                            <td class="px-4 py-2">{{ timeSlot.getStartTime|date("H:i") }} - {{ timeSlot.getEndTime|date("H:i") }}</td>
+                            <td class="px-4 py-2">{{ timeSlot.getEducator.getUser.getFullName }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

@@ -390,4 +390,36 @@ class BookingLessonService extends AbstractEntityService
         }
         return $timeSlotsArray;
     }
+
+    public function getChildsBookingLessons(int $userId) {
+        $user = $this->userRepository->find($userId);
+        $childs = $user->getChildrens();
+
+        $childsData = [];
+        foreach ($childs as $child) {
+            $timeSlots = [];
+            $bookings = $child->getBookingLessons();
+            foreach ($bookings as $booking) {
+                if ($booking->getStatus() == 'Booked' && $booking->getTimeSlot()->getStartTime() > new DateTime()) {
+                    $timeSlots[] = $booking->getTimeSlot();
+                }
+            }
+            //sort timeSlots by date and time
+            usort($timeSlots, function ($a, $b) {
+                return $a->getStartTime() <=> $b->getStartTime();
+            });
+            $childsData[] = [
+                'name' => $child->getFullName(),
+                'timeSlots' => $timeSlots
+            ];
+        }
+
+        return $childsData;
+    }
+
+    public function getEducatorByClubId() {
+        $this->bookingData = $this->session->get('booking');
+        $club = $this->clubRepository->find($this->bookingData['clubId']);
+        return $club->getEducators();
+    }
 }

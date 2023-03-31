@@ -17,6 +17,33 @@ class BookingLessonPage1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('dateFrom', DateType::class, [
+                'label' => 'Date de départ',
+//                'format' => 'ddMMMMyyyy',
+                'required' => true,
+                'html5' => true,
+                'widget' => 'single_text',
+//                'attr' => [
+//                    'class' => 'form-control',
+//                ],
+//                'days' => range(1,31),
+//                'months' => range(date('m'),12),
+//                'years' => range(date('Y'), date('Y')-1)
+            ])
+            ->add('dateTo', DateType::class, [
+                'label' => 'Date d\'arrivé',
+//                'format' => 'ddMMMMyyyy',
+                'required' => true,
+                'html5' => true,
+                'widget' => 'single_text',
+//                'attr' => [
+//                    'class' => 'form-control',
+//                ],
+//                'days' => range(1,31),
+//                'months' => range(date('m'),12),
+//                'years' => range(date('Y'), date('Y')-1)
+
+            ])
             ->add('club', EntityType::class, [
                 'class' => Club::class,
                 'label' => 'Club',
@@ -28,29 +55,6 @@ class BookingLessonPage1Type extends AbstractType
 //                'attr' => [
 //                    'class' => 'form-control',
 //                ],
-            ])
-            ->add('dateFrom', DateType::class, [
-                'label' => 'Date from',
-                'format' => 'ddMMMMyyyy',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'days' => range(1,31),
-                'months' => range(date('m'),12),
-                'years' => range(date('Y'), date('Y')-1)
-            ])
-            ->add('dateTo', DateType::class, [
-                'label' => 'Date to',
-                'format' => 'ddMMMMyyyy',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'days' => range(1,31),
-                'months' => range(date('m'),12),
-                'years' => range(date('Y'), date('Y')-1)
-
             ])
 
         ;

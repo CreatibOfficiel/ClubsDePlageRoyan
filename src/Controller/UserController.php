@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    private UserService $userService;
+    public UserService $userService;
     private ChildService $childService;
 
     public function __construct(
@@ -119,10 +119,16 @@ class UserController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
+
+        if ($this->isGranted('ROLE_EDUCATOR')) {
+            $nextCourses = $this->userService->getNextCourses($user);
+        }
+
         return $this->render('users/show.html.twig', [
             'user' => $user,
             'childs' => $user->getChildrens(),
-            'educatorAvailability' => $user->getEducator()
+            'educatorAvailability' => $user->getEducator(),
+            'nextCourses' => $nextCourses ?? null
         ]);
     }
 
