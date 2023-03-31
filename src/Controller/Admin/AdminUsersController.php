@@ -34,7 +34,7 @@ class AdminUsersController extends AbstractController
     #[Route('/{id}', name: 'app_admin_users_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('admin/users/index.html.twig', [
+        return $this->render('admin/users/show.html.twig', [
             'user' => $user,
         ]);
     }
