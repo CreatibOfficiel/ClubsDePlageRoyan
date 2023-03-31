@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\ClubRepository;
 use App\Services\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(ClubRepository $clubRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -26,7 +27,7 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/home.html.twig', [
-            'controller_name' => 'HomeController',
+            'clubs' => $clubRepository->findAll(),
         ]);
     }
 }

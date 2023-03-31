@@ -6,8 +6,87 @@
 
 {% block body %}
 
-    <div class="p-4 space-y-8 place-content-center bg-gray-900 min-h-screen">
+    <div class="px-8 py-16 space-y-8 bg-gray-900 min-h-screen flex flex-col space-y-4">
+        <div class="pb-8 lg:px-6">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Bienvenue 👋</h2>
+            <p class="mb-5 font-light sm:text-xl text-gray-400">Vous retrouverez ici toutes les informations sur les clubs de plages de Royan ouvert depuis 60 ans.</p>
 
+            <div class="flex space-x-4">
+                {% for club in clubs %}
+                    <div class="max-w-sm border rounded-lg shadow bg-gray-800 border-gray-700">
+                        <a href="{{ path('app_clubs_details', {'id': club.id}) }}">
+                            <img class="rounded-t-lg" src="{{ club.getPicturePath() }}" alt="club-picture" />
+                        </a>
+                        <div class="p-5">
+                            <a href="{{ path('app_clubs_details', {'id': club.id}) }}">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ club.getName() }}</h5>
+                            </a>
+                            <p class="mb-3 font-normal text-gray-400">{{ club.getDescription() }}</p>
+                            <a href="{{ path('app_clubs_details', {'id': club.id}) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+                                Accéder au club
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="lg:px-6">
+            <h3 class="text-2xl font-bold tracking-tight text-white mb-4">Ce que nous proposons :</h3>
+            <span class="mt-2 text-gray-400">Les clubs de plage sont ouverts tous les jours de 9h30 à 18h30.</span>
+            <span class="mt-2 text-gray-400">Tous les après-midi, pour le plaisir des petits et des grands, des concours et jeux sont organisés dans chacun des clubs de plage.</span>
+            <span class="mt-2 text-gray-400">Grâce à notre partenariat avec "Le Journal de Mickey", chaque enfant reçoit à la fin de la journée de nombreux cadeaux.</span>
+            <span class="mt-2 text-gray-400">De plus, pour découvrir le plaisir de la baignade ou pour des stages de perfectionnement, nos professeurs diplômés vous proposent des cours de natation.</span>
+            <span class="mt-2 text-gray-400">C'est parti pour des vacances inoubliables !</span>
+        </div>
+
+        <div class="lg:px-6">
+            <h3 class="text-2xl font-bold tracking-tight text-white mb-4">Ce que nos clients pensent de nous :</h3>
+            <div class="flex items-center mb-3">
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>1 étoile</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>2 étoiles</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>3 étoiles</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>4 étoiles</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>5 étoiles</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                <p class="ml-2 text-sm font-medium text-white">4.95 sur 5</p>
+            </div>
+            <p class="text-sm font-medium text-gray-400">sur 1,745 commentaires vérifiés par Trustpilot</p>
+            <div class="flex items-center mt-4">
+                <span class="text-sm font-medium text-blue-500">5 étoiles</span>
+                <div class="w-2/4 h-5 mx-4 rounded bg-gray-700">
+                    <div class="h-5 bg-yellow-400 rounded" style="width: 70%"></div>
+                </div>
+                <span class="text-sm font-medium text-blue-500">70%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-sm font-medium text-blue-500">4 étoiles</span>
+                <div class="w-2/4 h-5 mx-4 rounded bg-gray-700">
+                    <div class="h-5 bg-yellow-400 rounded" style="width: 17%"></div>
+                </div>
+                <span class="text-sm font-medium text-blue-500">17%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-sm font-medium text-blue-500">3 étoiles</span>
+                <div class="w-2/4 h-5 mx-4 rounded bg-gray-700">
+                    <div class="h-5 bg-yellow-400 rounded" style="width: 8%"></div>
+                </div>
+                <span class="text-sm font-medium text-blue-500">8%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-sm font-medium text-blue-500">2 étoiles</span>
+                <div class="w-2/4 h-5 mx-4 rounded bg-gray-700">
+                    <div class="h-5 bg-yellow-400 rounded" style="width: 4%"></div>
+                </div>
+                <span class="text-sm font-medium text-blue-500">4%</span>
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="text-sm font-medium text-blue-500">1 étoile</span>
+                <div class="w-2/4 h-5 mx-6 rounded bg-gray-700">
+                    <div class="h-5 bg-yellow-400 rounded" style="width: 1%"></div>
+                </div>
+                <span class="text-sm font-medium text-blue-500">1%</span>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

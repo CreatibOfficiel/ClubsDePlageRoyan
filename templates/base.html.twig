@@ -5,33 +5,40 @@
         <title>{% block title %}Bienvenue{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
-        {# Nav bar #}
-        <div class="w-full h-20 block flex-grow lg:flex lg:items-center lg:w-auto bg-gray-800 p-6 ">
-            <div class="text-lg lg:flex-grow">
-                <a href="{{ path('app_home') }}" class="block mt-4 lg:inline-block lg:mt-0 text-slate-50 hover:text-amber-300 mr-4">
-                    Accueil
+        <nav class="bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="{{ path('app_home') }}" class="flex items-center">
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Clubs Royan</span>
                 </a>
-                <a href="{{ path('app_booking_lesson') }}" class="block mt-4 lg:inline-block lg:mt-0 text-slate-50 hover:text-amber-300 mr-4">
-                    Réservation Natation
-                </a>
-                <a href="{{ path('app_childrens_activity') }}" class="block mt-4 lg:inline-block lg:mt-0 text-slate-50 hover:text-amber-300 mr-4">
-                    Activités
-                </a>
-                <a href="{{ path('app_prices') }}" class="block mt-4 lg:inline-block lg:mt-0 text-slate-50 hover:text-amber-300 mr-4">
-                    Tarifs
-                </a>
-                <a href="{{ path('app_contact') }}" class="block mt-4 lg:inline-block lg:mt-0 text-slate-50 hover:text-amber-300 mr-4">
-                    Contact et localisation
-                </a>
+                <div class="flex md:order-2">
+                    {% if app.user %}
+                        <a href="{{ path('app_user') }}">
+                            <button type="button" class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Mon compte</button>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">
+                            <button type="button" class="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Connexion</button>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                    <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+                        <li>
+                            <a href="{{ path('app_booking_lesson') }}" class="block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-blue-700 border-gray-700">Réservation</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_childrens_activity') }}" class="block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-blue-700 border-gray-700">Activités</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_prices') }}" class="block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-blue-700 border-gray-700">Tarifs</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_contact') }}" class="block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-blue-700 border-gray-700">Contact & localisation</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div>
-                {% if app.user %}
-                    <a href="{{ path('app_user') }}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Mon compte</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-white mt-4 lg:mt-0">Connexion</a>
-                {% endif %}
-            </div>
-        </div>
+        </nav>
 
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
