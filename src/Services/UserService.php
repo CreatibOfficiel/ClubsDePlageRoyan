@@ -66,7 +66,6 @@ class UserService extends AbstractEntityService
         $educatorCourses = $user->getEducator()->getTimeSlot();
         $educatorCourses = $educatorCourses->toArray();
 
-        //order by date ASC
         usort($educatorCourses, function ($a, $b) {
             return $a->getStartTime() <=> $b->getStartTime();
         });

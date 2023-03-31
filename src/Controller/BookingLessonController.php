@@ -33,7 +33,7 @@ class BookingLessonController extends AbstractController
         $bookingData = $this->bookingLessonService->getBookingData();
 
         $bookingPageDto = new BookingLessonPagesDto();
-        $bookingPageDto->dateFrom = new \DateTime();
+        $bookingPageDto->dateFrom = new DateTime('tomorrow');
         $bookingPageDto->dateTo = new \DateTime();
 
         $form = $this->createForm(BookingLessonPage1Type::class, $bookingPageDto);
