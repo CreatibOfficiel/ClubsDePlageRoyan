@@ -120,7 +120,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if ($this->isGranted('ROLE_EDUCATOR')) {
+        if ($this->isGranted('ROLE_EDUCATOR') && !$this->isGranted('ROLE_ADMIN')) {
             $nextCourses = $this->userService->getNextCourses($user);
         }
 
