@@ -384,7 +384,7 @@ class BookingLessonService extends AbstractEntityService
         $timeSlots = $educator->getTimeSlot();
         $timeSlotsArray = [];
         foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getBookingLessonsCount() > 2) {
+            if ($timeSlot->getBookingLessonsCount() > 1) {
                 $timeSlotsArray[] = $timeSlot->getStartTime();
             }
         }
